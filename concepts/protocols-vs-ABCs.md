@@ -122,6 +122,10 @@ class PrintableAndSerializable(Printable, Serializable):
     pass
 ```
 
+# When to use which one ?
+
+- ABCs are particularly useful when you already want to have a bit of implementation in your base class.
+- Use Protocols when you do not need or want to include inheritance in your code. However get in mind that they're not as well integrates as ABCs in terms of predictability, due to its structural subtyping nature and how python analyze it at runtime. Per example, if we just want to specify what type of argument a function expects in terms of what kind of this object should look like.
 
 
 # Resources
