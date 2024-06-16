@@ -4,10 +4,11 @@ class TrickyGameContext:
     a reference to an instance of a State subclass, which represents the current
     state of the Context.
     """
+
     _is_game_active = True
     _player_state = None
     _game_tied_state = "Game ends in a tie"
-    
+
     """
     A reference to the current state of the Context.
     """
@@ -53,16 +54,23 @@ class TrickyGameContext:
     def get_game_occupied_boxes(self):
         return self._player1.movements + self._player2.movements
 
-    
-    @property  
+    @property
     def get_live_board(self):
         return self._current_board
 
     @property
     def is_game_active(self):
         return self._is_game_active
-    
+
     @property
     def get_game_result(self):
-        winner_name = self._player1.name if self._player1.is_winner else self._player2.name if self._player2.is_winner else None 
-        return "the game has ended and the winner is " + winner_name if winner_name != None else self._game_tied_state
+        winner_name = (
+            self._player1.name
+            if self._player1.is_winner
+            else self._player2.name if self._player2.is_winner else None
+        )
+        return (
+            "the game has ended and the winner is " + winner_name
+            if winner_name != None
+            else self._game_tied_state
+        )

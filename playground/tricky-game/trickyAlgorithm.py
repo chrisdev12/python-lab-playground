@@ -7,13 +7,14 @@ winner_moves = [
     [3, 6, 9],
     [1, 5, 9],
     [3, 5, 7],
-];
+]
+
 
 def verify_tricky_winner(player_moves):
-    game_has_winner = False;
+    game_has_winner = False
     for moves in winner_moves:
-        if (all(m in player_moves for m in moves)):
+        if all(m in player_moves for m in moves):
             game_has_winner = True
         break
 
-    return game_has_winner;
+    return game_has_winner

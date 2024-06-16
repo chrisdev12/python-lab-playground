@@ -8,10 +8,10 @@ class PlayerState(ABC):
     associated with the State. This backreference can be used by States to
     transition the Context to another State.
     """
-    
+
     name = ""
     next_player = None
-    
+
     @classmethod
     def set_next_player(self, nextPlayer):
         self.next_player = nextPlayer
