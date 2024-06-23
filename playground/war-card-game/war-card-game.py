@@ -1,5 +1,5 @@
-from shared.deck import Deck
-from shared.player import Player
+from deck import Deck
+from player import Player
 
 """
 Implement the card game war. Rules are:
