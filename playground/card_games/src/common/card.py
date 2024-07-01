@@ -14,7 +14,8 @@ ranks = (
     "King",
     "Ace",
 )
-values = {
+
+default_values = {
     "Two": 2,
     "Three": 3,
     "Four": 4,
@@ -33,10 +34,10 @@ values = {
 
 class Card:
 
-    def __init__(self, suit: str, rank: str):
+    def __init__(self, suit: str, rank: str, values: dict[str, int] | None = None):
         self.suit = suit
         self.rank = rank
-        self.value = values[rank]
+        self.value = values[rank] if values != None else default_values[rank]
 
     def __str__(self) -> str:
         return f"{self.rank} of {self.suit}"

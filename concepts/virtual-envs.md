@@ -5,6 +5,17 @@ https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-v
 
 # How create packages in a local virtual env
 
+1. Activate the virtual env
+
+```bash
+python3 -m venv venv && source venv/bin/activate
+```
+
+2. Desactivate the virtual env
+
+```bash
+deactivate
+```
 
 # Resources
 

@@ -21,28 +21,34 @@ Finally, __init__.py files are often used to set up package-level configuration 
 > https://www.youtube.com/watch?v=GxCXiSkm6no&ab_channel=NeuralNine (Good example of the use of __init__.py file)
 
 
-# How Python handles modules.
+# [How Python handles modules](https://stackoverflow.com/questions/22942650/relative-import-from-init-py-file-throws-error).
+
+> https://docs.python.org/3/tutorial/modules.html#importing-from-a-package - As you will see later in the error section, it is not that in Python you cannot relative import between modules, but it all depends on how you run the entrypoint, because it defines which is the base starting directory that Python uses for module resolution.
 
 When you start the interpreter with a script, this script becomes the main module, with the matching name __main__.
 
 When using import, other modules are searched in the search path, that you can also access (and change) using sys.path. The first entry of sys.path is usually empty and stands for the current directory.
 
-- https://stackoverflow.com/questions/22942650/relative-import-from-init-py-file-throws-error 
+
 - https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#69099298
 
 
 # Import errors: “attempted relative import with no known parent package” 
 
-- Error fixed with sys.path.append("..")
-- [Virtual envs](./virtual-envs.md), as is explain at https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#50193944
-- Directory structure that favor how python handles the modules: https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#69099298 
-- [Using launch.json in VsCode](https://www.youtube.com/watch?v=Ad-inC3mJfU&t=21s&ab_channel=k0nze) -> This is a suboptimal solution that works locally, and forces anyone that works on this project to use vscode as their IDE. The best solution is to package the extern directory as its own package and have it part of the requirements for the project, and then you can import it from there. Unfortunately, you are trying to fix an anti-pattern by promoting another one.
+1. Installing the package ([in a virtualenv or not](./virtual-envs.md)) will give you what you want, though I would suggest using pip to do it rather than using setuptools directly (and using setup.cfg to store the metadata)
+    - Examples in this[StackOverflow thread](https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#50193944) or in this [blog](https://pkiage.hashnode.dev/creating-a-local-python-package-in-a-virtual-environment)
+2. [If you're not confident with pip install -e and virtual envs, then try to use directory structure that favor how python handles the modules](https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#69099298) 
+3. [Sys path hacks : Error fixed modifying/appending the sys.path](https://stackoverflow.com/questions/11536764/how-to-fix-attempted-relative-import-in-non-package-even-with-init-py/27876800#27876800)
+4. [Using the -m flag and running as a package works too](https://stackoverflow.com/questions/6323860/sibling-package-imports/23542795#23542795) (but will turn out a bit awkward if you want to convert your working directory into an installable package).
+5. [Using launch.json in VsCode](https://www.youtube.com/watch?v=Ad-inC3mJfU&t=21s&ab_channel=k0nze) -> This is a suboptimal solution that works locally, and forces anyone that works on this project to use vscode as their IDE. The best solution is to package the extern directory as its own package and have it part of the requirements for the project, and then you can import it from there. Unfortunately, you are trying to fix an anti-pattern by promoting another one.
 
-## Import errors - solution examples
+This *try to use directory structure that favor how python handles the modules* option is my preferred option because it provides the best semantics (the intention and direction of the module import is quite clear), it directly solves the relativ imports error, and its similarity to other development environments. This does not mean that the previous solution of installing as a package is not practical or functional, but in my opinion it has two characteristics that do not make it more pertinent:
 
-- https://www.youtube.com/watch?v=nk7UWUKlfGM&ab_channel=chinamatt (solution of relative imports using setup tools to enable abosule imports )
-- https://www.youtube.com/watch?v=lR-OKnX7uOw&ab_channel=TheDevLife (Solution of relative imports using the sys.path.append)
+- Goal design: The strategy of installing as a package has the objective of packaging management. For the case of import errors it is functional, because it ends up making possible that a module A in a Folder A, can use a module B in a folder B, simply making reference to the module B as if it were any package. The setup.py and the pip install -e will take care of all this management, and it can be very practical and preferable if you want to solve this kind of situations.
 
+- Import eror targeted solution: As mentioned above, the solution offered by this strategy is to enable the use between models of different packages making them globally visible in one way or another. In more conceptual terms, the sys.path is modified underneath so that the module resolution can make use of a local module as if it were any other package. However, this does not mean that you can write module when relative imports like: ..b.module_b, this syntax would still give you an error - if you wanted to make it work you would have to use b.module_b. *On the other hand, the directory structure solution does make it possible for you to use relative imports, where the semantics of the import are clearly favored.*
+
+> The choice of a strategy to deal with the common problems of relative imports depends on several characteristics, and the characteristics and objectives of the project should be considered before making a choice. However, my personal opinion is to start with the simplest option, and that allows the code base to avoid configurations that are not essential to its purpose, as this simply adds unnecessary complexity.
 
 # Resources
 
