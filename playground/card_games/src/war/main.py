@@ -1,5 +1,6 @@
 from ..common import Deck
 from .player import Player
+from .war_card import WarGameCard
 
 """
 Implement the card game war. Rules are:
@@ -14,29 +15,13 @@ Implement the card game war. Rules are:
     cards remaining is the winner.
 """
 # Another good example using Python with OOP game logic: https://gist.github.com/damianesteban/6896120
-suits = ("Hearts", "Diamonds", "Spades", "Clubs")
-ranks = (
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "Nine",
-    "Ten",
-    "Jack",
-    "Queen",
-    "King",
-    "Ace",
-)
 
 
-def play_game():
+def main():
     player_one = Player("One")
     player_two = Player("Two")
 
-    new_deck = Deck(suits, ranks)
+    new_deck = Deck(WarGameCard)
     new_deck.shuffle()
 
     for x in range(26):
@@ -117,7 +102,3 @@ def play_game():
                     for num in range(5):
                         player_one_cards.append(player_one.remove_one())
                         player_two_cards.append(player_two.remove_one())
-
-
-if __name__ == "__main__":
-    play_game()
