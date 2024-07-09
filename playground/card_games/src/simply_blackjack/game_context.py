@@ -19,7 +19,6 @@ from .blackjack_player import BlackJackPlayer
 
 
 class GameContext:
-    __bet_pot: int
 
     def __init__(
         self,
@@ -33,6 +32,7 @@ class GameContext:
         self.__dealer: BlackJackDealer = dealer
         self.__deck.shuffle()
         self.__dealer_max_val_criteria = dealer_max_val_criteria
+        self.__bet_pot = 0
 
     def start_game(self):
         is_game_active = True
@@ -69,10 +69,8 @@ class GameContext:
     def __play_player_hand(self, player: BlackJackPlayer) -> bool:
         is_busted = False
         while True:
-            player_take_card_choice = input(
-                f"Player {player.name} do you want to hit (take another card) or stay?: "
-            )
-            if player_take_card_choice.lower() == "stay":
+            player_choice_stand = self.__is_user_standing()
+            if player_choice_stand:
                 break
             player.add_cards(self.__deck.deal_one())
             player.show_hand()
@@ -97,6 +95,22 @@ class GameContext:
             self.__dealer.add_cards(self.__deck.deal_one())
 
         return is_busted
+
+    def __is_user_standing(self):
+        user_choice_stand = False
+        while True:
+            x = input("Would you like to Hit or Stand? Enter 'h' or 's' ")
+            if x[0].lower() == "h":
+                break
+            elif x[0].lower() == "s":
+                print("Player stands. Dealer is playing.")
+                user_choice_stand = True
+            else:
+                print("Sorry, please try again.")
+                continue
+            break
+
+        return user_choice_stand
 
     def __reset_match(self):
         self.__player.reset_match_cards()
