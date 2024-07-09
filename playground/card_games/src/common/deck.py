@@ -27,10 +27,14 @@ class Deck:
         Card: Card,
     ):
         # Note this only happens once upon creation of a new Deck
+        self.Card = Card
+        self.new_deck()
+
+    def new_deck(self):
         self.all_cards = []
         for suit in suits:
             for rank in ranks:
-                self.all_cards.append(Card(suit, rank))
+                self.all_cards.append(self.Card(suit, rank))
 
     def shuffle(self):
         # Note this doesn't return anything
