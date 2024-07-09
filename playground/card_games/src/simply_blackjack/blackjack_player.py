@@ -1,4 +1,4 @@
-from .bet_pocket import BetPocket
+from .bet_pocket import BetPocket, NotEnoughtMoneyError
 from .player import Player
 
 
@@ -27,11 +27,14 @@ class BlackJackPlayer(Player):
                 money_amount = int(
                     input("How much do you want to bet in this round ? ")
                 )
+                self.__pocket.bet(money_amount)
             except ValueError:
                 print("Please write value that be a number")
+            except NotEnoughtMoneyError as exc:
+                print("Sorry, your bet can't exceed your total.", str(exc))
             else:
                 break
-        return self.__pocket.bet(money_amount)
+        return money_amount
 
     def bet_win(self, money_amount: int) -> None:
         self.__pocket.bet_won(money_amount)

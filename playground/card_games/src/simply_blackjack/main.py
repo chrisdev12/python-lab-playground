@@ -32,7 +32,11 @@ def main():
     player_name = input("Please put the player name: ")
     while True:
         try:
-            player_init_bucket_money = int(input("Please put your bet pocket amount: "))
+            player_init_bucket_money = int(
+                input(
+                    "Please ingress the total coins that you want in your bet-pocket: "
+                )
+            )
         except ValueError:
             print("Please input that be a number")
         else:

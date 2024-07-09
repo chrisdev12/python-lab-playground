@@ -16,7 +16,7 @@ class BetPocket:
     def bet(self, bet_amount: int) -> int:
         if bet_amount > self.__total_money:
             raise NotEnoughtMoneyError(
-                f"Requested to take {bet_amount} coins, but only {self.pocket_money} coins are left"
+                f"Requested to take {bet_amount} coins, but only {self.__total_money} coins are left"
             )
         self.__total_money -= bet_amount
 
