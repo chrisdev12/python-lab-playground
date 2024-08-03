@@ -1,5 +1,5 @@
-from inputUser import player_input
-from gameContext.playerState import PlayerState
+from input_user import player_input
+from game_context.player_state import PlayerState
 
 
 class Player(PlayerState):

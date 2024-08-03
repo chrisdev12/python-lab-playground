@@ -37,18 +37,24 @@ class TrickyGameContext:
         if self._is_game_active:
             movement = self._player_state.play_turn(self.get_game_occupied_boxes)
             self._current_board[movement - 1] = self._player_state.label
-            self.__verify_game_status()
+            if self.__check_winner_exists():
+                return
+            if self.__verify_game_draw_and_finished():
+                return
             self._player_state.next_turn()
 
-    def __verify_game_status(self):
+    def __check_winner_exists(self) -> bool:
         player_turn_result = self._tricky_winner_algorithm(self._player_state.movements)
         if player_turn_result:
             self._is_game_active = False
             self._player_state.is_winner = True
-            return
+        return player_turn_result
+
+    def __verify_game_draw_and_finished(self) -> bool:
         if len(self.get_game_occupied_boxes) == 9:
             self._is_game_active = False
-            return
+            return True
+        return False
 
     @property
     def get_game_occupied_boxes(self):

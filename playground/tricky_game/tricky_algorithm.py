@@ -15,6 +15,6 @@ def verify_tricky_winner(player_moves):
     for moves in winner_moves:
         if all(m in player_moves for m in moves):
             game_has_winner = True
-        break
+            break
 
     return game_has_winner

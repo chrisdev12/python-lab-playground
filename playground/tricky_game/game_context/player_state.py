@@ -12,7 +12,6 @@ class PlayerState(ABC):
     name = ""
     next_player = None
 
-    @classmethod
     def set_next_player(self, nextPlayer):
         self.next_player = nextPlayer
 
@@ -24,6 +23,5 @@ class PlayerState(ABC):
     def context(self, context) -> None:
         self._context = context
 
-    @classmethod
     def next_turn(self) -> None:
-        self.context.transition_to_state(self.next_player)
+        self._context.transition_to_state(self.next_player)

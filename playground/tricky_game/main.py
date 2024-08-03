@@ -1,7 +1,7 @@
 from board import get_init_board, display_board
 from player import Player
-from gameContext.context import TrickyGameContext
-from trickyAlgorithm import verify_tricky_winner
+from game_context.context import TrickyGameContext
+from tricky_algorithm import verify_tricky_winner
 
 
 def init_game():
